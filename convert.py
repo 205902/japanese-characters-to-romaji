@@ -1,4 +1,5 @@
 import re
+import pykakasi
 
 def extract_japanese(source):
     # 行コメントとブロックコメントを除去
@@ -9,6 +10,14 @@ def extract_japanese(source):
 
     # リストを返す
     return japanese_words
+
+def word_to_romaji(japanese_words):
+    kks = pykakasi.kakasi()
+    romaji_list = []
+    for word in japanese_words:
+        result = kks.convert(word)
+        romaji_list.append(''.join([item['hepburn'] for item in result]))
+    return romaji_list
 
 
 java_source = """
@@ -32,8 +41,10 @@ public class 学生管理 {
         学生管理 管理者 = new 学生管理();
 
         // 学生を追加
-        管理者.学生追加(new 学生("田中", 20, "数学"));
-        管理者.学生追加(new 学生("佐藤", 19, "英語"));
+        管理者.学生追加(new 学生("田中", 20, "すうがく"));
+        管理者.学生追加(new 学生("佐藤", 19, "エイゴ"));
+        管理者.学生追加(new 学生("年金", 20, "市場１"));
+        管理者.学生追加(new 学生("代行", 19, "キャッシュバランス再計算９９９９９"));
 
         // ...
         // （省略）
@@ -45,3 +56,6 @@ public class 学生管理 {
 # 日本語の単語の重複排除
 unique_japanese_words = list(set(extract_japanese(java_source)))
 print(unique_japanese_words)
+
+# ローマ字に変換
+print(word_to_romaji(unique_japanese_words))
