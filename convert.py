@@ -4,11 +4,12 @@ def extract_japanese(source):
     # 行コメントとブロックコメントを除去
     no_comments = re.sub(r"(//.*|/\*[^*]*\*+(?:[^/*][^*]*\*+)*/)", "", source)
 
-    # 日本語を抽出（Unicodeの範囲を使用）
-    japanese = re.findall(r"[\u2E80-\u2EFF\u3000-\u303F\u3040-\u309F\u30A0-\u30FF\u3200-\u32FF\u3300-\u33FF\u4E00-\u9FCC\uF900-\uFAD9\U00020000-\U0002FFFF]", no_comments)
+    # 日本語の単語を抽出（Unicodeの範囲を使用）
+    japanese_words = re.findall(r"[\u2E80-\u2EFF\u3000-\u303F\u3040-\u309F\u30A0-\u30FF\u3200-\u32FF\u3300-\u33FF\u4E00-\u9FCC\uF900-\uFAD9\U00020000-\U0002FFFF]+", no_comments)
 
-    # リストを文字列に変換して返す
-    return ''.join(japanese)
+    # リストを返す
+    return japanese_words
+
 
 java_source = """
 import java.util.ArrayList;
