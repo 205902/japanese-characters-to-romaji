@@ -42,3 +42,4 @@ public class 学生管理 {
 """
 
 print(extract_japanese(java_source))
+
