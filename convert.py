@@ -42,5 +42,6 @@ public class 学生管理 {
 }
 """
 
-print(extract_japanese(java_source))
-
+# 日本語の単語の重複排除
+unique_japanese_words = list(set(extract_japanese(java_source)))
+print(unique_japanese_words)
